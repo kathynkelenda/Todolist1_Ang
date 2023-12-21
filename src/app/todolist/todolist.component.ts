@@ -10,8 +10,8 @@ import { NgForm } from '@angular/forms';
 })
 export class TodolistComponent implements OnInit {
 
-  taskArray = [{taskName:'Brush teeth', isCompleted: false}];
-
+  taskArray = [{taskName:'Brush teeth', isCompleted: false, isEditable: false}];
+  
   constructor(){}
 
   ngOnInit(): void {
@@ -19,25 +19,36 @@ export class TodolistComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    console.log(form);
+    //console.log(form);
     this.taskArray.push({
       taskName:form.controls['task'].value,
-      isCompleted: false
+      isCompleted: false,
+      isEditable: false
     });
     //reset() Efface la saisie après soumission du formulaire
     form.reset();
   }
 
   onDelete(index: number) {
-    console.log(index);
+    //console.log(index);
     //splice supprime un élément d'un tb en utilisant son indice ds ce tb.
     this.taskArray.splice(index,1);
   }
 
   onCheck(index: number){
-    console.log(this.taskArray);
+    //console.log(this.taskArray);
 
     this.taskArray[index].isCompleted = !this.taskArray[index].isCompleted
+  }
+
+  onEdit(index: number) {
+    this.taskArray[index].isEditable = true;
+  }
+
+  onSave(index: number, newtask: string) {
+    
+    this.taskArray[index].taskName = newtask;
+    this.taskArray[index].isEditable = false;
   }
 
 }
